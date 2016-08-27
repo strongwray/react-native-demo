@@ -1,5 +1,4 @@
 //新闻组件
-
 import Util from '../../util';
 import Service from '../../config';
 import React, { Component } from 'react';
@@ -12,14 +11,15 @@ import {
 
 //新闻模块
 class NewLists extends Component {
-  state = {
-    news:[]
-  };
+
+  state = { news:[] };
+
   componentDidMount(){
-    var  path = Service.host + Service.getNews; //获取新闻列表
+    var  path = Service.host + Service.getNews, //获取新闻列表
+         self = this;
     Util.get(path,function(data){
       if(data.success){
-        this.setState({news:data.datas})
+        self.setState({news:data.datas})
       } else {
         AlertIOS.alert('失败','获取新闻列表失败');
       }
@@ -29,12 +29,12 @@ class NewLists extends Component {
   render() {
     var createItem = function(item) {
       return (
-              <Views>
-                <Text style={styles.title}>
-                  {item.title}
-                </Text>
-              </Views>
-          )
+        <View>
+          <Text style={styles.title}>
+            {item.title}
+          </Text>
+        </View>
+      )
     }
     return (
       <View>

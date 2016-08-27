@@ -45,7 +45,9 @@ class nba_news extends Component {
         tintColor="#555"
         barTintColor="#fff">
         <TabBarIOS.Item
-          icon={require('./img/basketball.png')}
+          icon={require('./img/news.png')}
+          renderAsOriginal
+          selectedIcon={require('./img/news_select.png')}
           selected={this.state.selectedTab === 'home'}
           onPress={() => {
             this.setState({
@@ -55,16 +57,14 @@ class nba_news extends Component {
           <Home/>
         </TabBarIOS.Item>
         <TabBarIOS.Item
-          systemIcon="more"
-          badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
-          selected={this.state.selectedTab === 'history'}
+          icon={require('./img/basketball.png')}
+          selected={this.state.selectedTab === 'team'}
           onPress={() => {
             this.setState({
-              selectedTab: 'history',
-              notifCount: this.state.notifCount + 1,
+              selectedTab: 'team',
             });
           }}>
-          {this._renderContent('#783E33', 'Red Tab', this.state.notifCount)}
+          <About/>
         </TabBarIOS.Item>
         <TabBarIOS.Item
           icon={require('./img/about.png')}

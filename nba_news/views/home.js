@@ -11,7 +11,6 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.cover}>
-          <Text style={styles.homeTitle}>这里是首页</Text>
           <NewLists/>
       </View>
     )
