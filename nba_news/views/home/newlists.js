@@ -31,14 +31,14 @@ class NewLists extends Component {
       return (
         <View>
           <Text style={styles.title}>
-            {item.title}
+              {item.title}
           </Text>
         </View>
       )
     }
     return (
       <View>
-        <Text style={styles.title}>马刺新闻首页</Text>
+        <Text style={styles.title}>新闻首页</Text>
         {this.state.news.map(createItem)}
       </View>
     )
@@ -50,6 +50,8 @@ class NewLists extends Component {
 const styles = StyleSheet.create({
   title:{
     fontSize:18,
+    marginTop:10,
+    marginBottom:10,
     color:'#555'
   },
   newItemTitle:{
