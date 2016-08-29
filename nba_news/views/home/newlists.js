@@ -3,19 +3,19 @@ import Util from '../../util';
 import Service from '../../config';
 import React, { Component } from 'react';
 import {
+  AlertIOS,
+  ScrollView,
+  TouchableOpacity,
   Text,
   View,
   StyleSheet,
-  AlertIOS,
-  ScrollView,
-  TouchableOpacity
+  Image
 } from 'react-native';
 
 //新闻模块
 class NewLists extends Component {
 
   state = { news:[] };
-  renderItems = [];
 
   componentDidMount(){
     var  path = Service.host + Service.getNews, //获取新闻列表
@@ -32,30 +32,35 @@ class NewLists extends Component {
   loadDetail(){
     console.log('这里是详情页')
   }
+
 //创建单挑新闻
   createItem(element){
     return (
       <TouchableOpacity onPress={this.loadDetail}>
-      <View style={styles.item}>
-            <View>
-              <Text style={styles.title}>{element.title}</Text>
-                <View style={{flexDirection:'row'}}>
-                    <Text style={styles.newsLabel}>
-                        {element.createTime}
-                    </Text>
-                    <Text style={styles.newsLabel}>
-                        {element.comeFrom}
-                    </Text>
-                </View>
+        <View style={styles.item}>
+            <View style={{flex:1,marginRight:10}}>
+              <Image source={{uri:element.imageUrl}} style={styles.img}/>
             </View>
-      </View>
+            <View style={{flexDirection:'column',flex:4}}>
+              <View>
+                <Text numberOfLines={5} style={styles.title}>{element.title}</Text>
+              </View>
+              <View style={{flexDirection:'row',marginTop:10}}>
+                  <Text style={styles.newsLabel}>
+                      {element.createTime}
+                  </Text>
+                  <Text style={styles.newsLabel}>
+                      {element.comeFrom}
+                  </Text>
+              </View>
+            </View>
+        </View>
       </TouchableOpacity>
     )
   }
   render() {
     return (
       <ScrollView style={{height:1000}}>
-        <Text style={styles.mainTitle}>新闻首页</Text>
         {this.state.news.map(this.createItem)}
       </ScrollView>
     )
@@ -65,21 +70,22 @@ class NewLists extends Component {
 
 
 const styles = StyleSheet.create({
-  mainTitle:{
-    fontSize:25,
-    color:'#10ade2',
-  },
   item:{
-    flex:1,
+    flexDirection:'row',
+    width:Util.size.width,
+    padding:10,
     borderBottomWidth:1,
-    padding:15,
-    borderColor:"#eee"
+    borderColor:"#eee",
+  },
+  img:{
+    width:70,
+    height:70,
   },
   title:{
     fontSize:18,
+    fontFamily: 'Cochin',
     color:'#555',
-    alignSelf:'flex-start',
-    marginBottom:5
+    marginBottom:5,
   },
   newsLabel:{
     fontSize:16,

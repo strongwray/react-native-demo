@@ -28,7 +28,7 @@ class nba_news extends Component {
     notifCount: 0,
     presses: 0,
   };
-  
+
   render() {
     return (
       <TabBarIOS

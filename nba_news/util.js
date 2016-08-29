@@ -1,4 +1,11 @@
-var Util = {
+import Dimensions from 'Dimensions'
+
+let Util = {
+  //屏幕尺寸
+  size: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height
+  },
   //get请求
   get: function (url, callback) {
     var fetchOptions = {
