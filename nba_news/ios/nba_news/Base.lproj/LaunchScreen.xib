@@ -22,6 +22,6 @@
         </view>
     </objects>
     <resources>
-        <image name="nba_logo" width="325" height="325"/>
+        <image name="nba_logo" width="162" height="162"/>
     </resources>
 </document>

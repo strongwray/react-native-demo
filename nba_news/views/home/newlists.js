@@ -7,12 +7,15 @@ import {
   View,
   StyleSheet,
   AlertIOS,
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
 
 //新闻模块
 class NewLists extends Component {
 
   state = { news:[] };
+  renderItems = [];
 
   componentDidMount(){
     var  path = Service.host + Service.getNews, //获取新闻列表
@@ -26,21 +29,35 @@ class NewLists extends Component {
     })
   }
 
-  render() {
-    var createItem = function(item) {
-      return (
-        <View>
-          <Text style={styles.title}>
-              {item.title}
-          </Text>
-        </View>
-      )
-    }
+  loadDetail(){
+    console.log('这里是详情页')
+  }
+//创建单挑新闻
+  createItem(element){
     return (
-      <View>
-        <Text style={styles.title}>新闻首页</Text>
-        {this.state.news.map(createItem)}
+      <TouchableOpacity onPress={this.loadDetail}>
+      <View style={styles.item}>
+            <View>
+              <Text style={styles.title}>{element.title}</Text>
+                <View style={{flexDirection:'row'}}>
+                    <Text style={styles.newsLabel}>
+                        {element.createTime}
+                    </Text>
+                    <Text style={styles.newsLabel}>
+                        {element.comeFrom}
+                    </Text>
+                </View>
+            </View>
       </View>
+      </TouchableOpacity>
+    )
+  }
+  render() {
+    return (
+      <ScrollView style={{height:1000}}>
+        <Text style={styles.mainTitle}>新闻首页</Text>
+        {this.state.news.map(this.createItem)}
+      </ScrollView>
     )
   }
 
@@ -48,15 +65,26 @@ class NewLists extends Component {
 
 
 const styles = StyleSheet.create({
+  mainTitle:{
+    fontSize:25,
+    color:'#10ade2',
+  },
+  item:{
+    flex:1,
+    borderBottomWidth:1,
+    padding:15,
+    borderColor:"#eee"
+  },
   title:{
     fontSize:18,
-    marginTop:10,
-    marginBottom:10,
-    color:'#555'
+    color:'#555',
+    alignSelf:'flex-start',
+    marginBottom:5
   },
-  newItemTitle:{
-    fontSize:14,
-    color:'#10ade2'
+  newsLabel:{
+    fontSize:16,
+    marginRight:5,
+    color:'#999',
   }
 });
 
