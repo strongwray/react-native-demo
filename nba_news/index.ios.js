@@ -55,7 +55,7 @@ class nba_news extends Component {
               selectedTab: 'team',
             });
           }}>
-          <About/>
+          <Teams/>
         </TabBarIOS.Item>
         <TabBarIOS.Item
           icon={require('./img/about.png')}

@@ -6,15 +6,17 @@ import {
   Text,
   View,
   StyleSheet,
-  AlertIOS
+  AlertIOS,
+  ScrollView,
+  Image
 } from 'react-native';
 
 //新闻模块
 class Teams extends Component {
-  state = {
-    teams:[]
-  }
-  componentDidMount(){
+
+  state = { teams:[] };
+
+  componentWillMount(){
     var  path = Service.host + Service.getTeams, //获取NBA球队
          self = this;
     Util.get(path,function(data){
@@ -26,10 +28,33 @@ class Teams extends Component {
     })
   }
 
-  render(){
+  createItems(item,i){
+    return (
+      <View key={i} style={styles.teamItem}>
+        <Image source={{uri:item.teamIcon}} style={styles.teamIcon}/>
+        <Text>{item.teamName}</Text>
+        <Text>{item.teamRecord}</Text>
+      </View>
+    )
+  }
 
+  render(){
+    return (
+      <ScrollView style={{width:Util.size.height,flexDirection:'column'}}>
+        {this.state.teams.map(this.createItems)}
+      </ScrollView>
+    )
   }
 
 }
+
+const styles = StyleSheet.create({
+  teamItem:{
+  },
+  teamIcon:{
+    width:70,
+    height:70
+  }
+})
 
 module.exports = Teams

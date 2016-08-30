@@ -33,10 +33,10 @@ class NewLists extends Component {
     console.log('这里是详情页')
   }
 
-//创建单挑新闻
-  createItem(element){
+//创建单条新闻
+  createItem(element,i){
     return (
-      <TouchableOpacity onPress={this.loadDetail}>
+      <TouchableOpacity onPress={this.loadDetail} key={i}>
         <View style={styles.item}>
             <View style={{flex:1,marginRight:10}}>
               <Image source={{uri:element.imageUrl}} style={styles.img}/>
@@ -60,9 +60,11 @@ class NewLists extends Component {
   }
   render() {
     return (
-      <ScrollView style={{height:Util.size.height}}>
-        {this.state.news.map(this.createItem)}
-      </ScrollView>
+      <View>
+        <ScrollView style={{height:Util.size.height}}>
+          {this.state.news.map(this.createItem)}
+        </ScrollView>
+      </View>
     )
   }
 

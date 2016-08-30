@@ -5,14 +5,14 @@ exports.api = function(app){
   //获取NBA球队图标
   app.get('/api/teams',function(req,res){
     	let basicUrl = 'http://g.hupu.com/nba/teams',
-          resData = {success:true,datas:[]}
+          resData = {success:true,datas:[]};
       request(basicUrl,function (error, response, body){
       if (!error && response.statusCode == 200) {
         let $ = cheerio.load(body);
         $('.box').each(function(index,element){
           let team = {};
-  			 	  team.teamIcon = $(element).find('img').attr('src'),
-  			 		team.teamName = $(element).find('h2').text(),
+  			 	  team.teamIcon = $(element).find('img').attr('src').replace(/http/, "https");
+  			 		team.teamName = $(element).find('h2').text();
   			 		team.teamRecord = $(element).find('p').text();
             resData.datas.push(team)
   			})
