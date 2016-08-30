@@ -1,21 +1,25 @@
 //新闻组件
 import Util from '../../util';
 import Service from '../../config';
+import Detail from './news_detail';
 import React, { Component } from 'react';
 import {
   AlertIOS,
   ScrollView,
   TouchableOpacity,
+  Navigator,
   Text,
   View,
   StyleSheet,
   Image
 } from 'react-native';
 
+
 //新闻模块
 class NewLists extends Component {
 
   state = { news:[] };
+
 
   componentDidMount(){
     var  path = Service.host + Service.getNews, //获取新闻列表
@@ -29,14 +33,23 @@ class NewLists extends Component {
     })
   }
 
-  loadDetail(){
-    console.log('这里是详情页')
+  _loadDetail(){
+    const { navigator } = this.props;
+        //为什么这里可以取得 props.navigator?请看上文:
+        //<Component {...route.params} navigator={navigator} />
+        //这里传递了navigator作为props
+        if(navigator) {
+            navigator.push({
+                name: 'SecondPageComponent',
+                component: SecondPageComponent,
+            })
+        }
   }
 
 //创建单条新闻
   createItem(element,i){
     return (
-      <TouchableOpacity onPress={this.loadDetail} key={i}>
+      <TouchableOpacity onPress={this._loadDetail} key={i}>
         <View style={styles.item}>
             <View style={{flex:1,marginRight:10}}>
               <Image source={{uri:element.imageUrl}} style={styles.img}/>

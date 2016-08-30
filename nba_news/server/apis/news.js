@@ -2,7 +2,7 @@
 const request = require('request'),
       cheerio = require('cheerio');
 exports.api = function(app){
-  //获取虎扑新闻
+  //获取虎扑新闻列表
   app.get('/api/news',function(req,res){
     let basicUrl = 'https://m.hupu.com/nba/news/',//虎扑新闻页面(现在从手机版获取)
         resData = {success:true,datas:[]};
@@ -10,10 +10,11 @@ exports.api = function(app){
         if (!error && response.statusCode == 200) {
           let $ = cheerio.load(body);
           $('.news-list ul').children().each(function(index,element){
-              let news = {};
+              let news = {},reg = /\d+/;
+              news.id = Number(reg.exec($(element).find('.news-link').attr('href')));
+              news.title = $(element).find('.news-wrap .news-txt h3').text().trim(); //标题(trim去除字符串中的空格)
               news.imageUrl = $(element).find('.news-wrap .img-wrap').css()['background-image'];//获取当前的imageUrl
               news.imageUrl = news.imageUrl.slice(4,news.imageUrl.length -1); //切割字符串
-              news.title = $(element).find('.news-wrap .news-txt h3').text().trim(); //标题(trim去除字符串中的空格)
               news.createTime = $(element).find('.news-txt .news-status-bar .news-info > .news-time').text(); //创建时间
               news.comeFrom = $(element).find('.news-txt .news-status-bar .news-info > .news-source').text(); //消息来源
               resData.datas.push(news)
@@ -23,6 +24,30 @@ exports.api = function(app){
           resData.success = false;
           res.send(resData)
         }
+      })
+  })
+  //获取新闻详情页
+  app.post('/api/news/detail',function(req,res){
+      let newsId = req.body.newsId,
+          basicUrl = 'https://m.hupu.com/nba/news/'+newsId+'.html',//虎扑新闻页面详情
+          resData = {success:true,newsDetail:{}};
+          console.log(basicUrl)
+      request(basicUrl,function (error, response, body){
+          if (!error && response.statusCode == 200) {
+              let $ = cheerio.load(body),newsDetail = {},article = '';
+              resData.newsDetail.title = $('.detail-content').find('.artical-title h1').text();
+              resData.newsDetail.media = $('.detail-content').find('.artical-title .artical-info').children('.author-name').children('.media').text();
+              resData.newsDetail.times = $('.detail-content').find('.artical-title .artical-info').children('.times').text();
+              resData.newsDetail.articleImg = $('.article-content img').attr('src');
+              $('.article-content').find('p').each(function(index,element){ //获取当前文章内容
+                  article += $(element).text();
+              })
+              resData.newsDetail.content = article;
+            res.send(resData)
+          } else { //请求失败
+            resData.success = false;
+            res.send(resData)
+          }
       })
   })
 
