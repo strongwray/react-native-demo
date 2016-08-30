@@ -12,13 +12,9 @@ class About extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.pic} source={{uri: 'https://gdc.hupucdn.com/gdc/nba/team/logo/SAS.png'}}/>
-        <Text style={styles.teamName}>
-            圣安东尼奥马刺
-        </Text>
-        <Text style={styles.instructions}>
-            圣安东尼奥马刺是NBA现有30支球队之一，成立于1967年并加入ABA，1976年从ABA合并进入NBA，马刺队是西部联盟西南分区的球队。
-        </Text>
+        <Image style={styles.pic} source={{uri: 'https://avatars1.githubusercontent.com/u/11511939?v=3&s=460'}}/>
+        <Text style={styles.teamName}>wray v1.0.0</Text>
+        <Text style={styles.instructions}>用实力让情怀落地</Text>
       </View>
     );
   }
