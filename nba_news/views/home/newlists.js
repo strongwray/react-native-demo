@@ -60,7 +60,7 @@ class NewLists extends Component {
   }
   render() {
     return (
-      <ScrollView style={{height:1000}}>
+      <ScrollView style={{height:Util.size.height}}>
         {this.state.news.map(this.createItem)}
       </ScrollView>
     )

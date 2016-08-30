@@ -3,9 +3,9 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
-import About from './views/about';
 import Home from './views/home';
+import Teams from './views/teams';
+import About from './views/about';
 import React, { Component } from 'react';
 import {
   AppRegistry,
