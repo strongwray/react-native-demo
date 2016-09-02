@@ -30,19 +30,18 @@ exports.api = function(app){
   app.post('/api/news/detail',function(req,res){
       let newsId = req.body.newsId,
           basicUrl = 'https://m.hupu.com/nba/news/'+newsId+'.html',//虎扑新闻页面详情
-          resData = {success:true,newsDetail:{}};
-          console.log(basicUrl)
+          resData = {success:true,datas:{}};
       request(basicUrl,function (error, response, body){
           if (!error && response.statusCode == 200) {
               let $ = cheerio.load(body),newsDetail = {},article = '';
-              resData.newsDetail.title = $('.detail-content').find('.artical-title h1').text();
-              resData.newsDetail.media = $('.detail-content').find('.artical-title .artical-info').children('.author-name').children('.media').text();
-              resData.newsDetail.times = $('.detail-content').find('.artical-title .artical-info').children('.times').text();
-              resData.newsDetail.articleImg = $('.article-content img').attr('src');
+              resData.datas.title = $('.detail-content').find('.artical-title h1').text();
+              resData.datas.media = $('.detail-content').find('.artical-title .artical-info').children('.author-name').children('.media').text();
+              resData.datas.times = $('.detail-content').find('.artical-title .artical-info').children('.times').text();
+              resData.datas.articleImg = $('.article-content img').attr('src');
               $('.article-content').find('p').each(function(index,element){ //获取当前文章内容
                   article += $(element).text();
               })
-              resData.newsDetail.content = article;
+              resData.datas.content = article;
             res.send(resData)
           } else { //请求失败
             resData.success = false;

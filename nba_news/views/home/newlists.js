@@ -15,11 +15,10 @@ import {
 } from 'react-native';
 
 
-//新闻模块
+//多条新闻
 class NewLists extends Component {
 
   state = { news:[] };
-
 
   componentDidMount(){
     var  path = Service.host + Service.getNews, //获取新闻列表
@@ -33,37 +32,57 @@ class NewLists extends Component {
     })
   }
 
-  _loadDetail(){
-    const { navigator } = this.props;
-        //为什么这里可以取得 props.navigator?请看上文:
-        //<Component {...route.params} navigator={navigator} />
-        //这里传递了navigator作为props
-        if(navigator) {
-            navigator.push({
-                name: 'SecondPageComponent',
-                component: SecondPageComponent,
-            })
-        }
+//创建单条新闻
+  render() {
+    var renderItems = [],news = this.state.news;
+    for(let i=0;i<news.length;i++){
+      renderItems.push(
+        <NewItem key={i} item={news[i]} id={news[i].id} nav={this.props.navigator}/>
+      )
+    }
+    return (
+        <ScrollView style={{height:Util.size.height}}>
+          {renderItems}
+        </ScrollView>
+     )
   }
 
-//创建单条新闻
-  createItem(element,i){
+}
+
+//单条新闻
+class NewItem extends Component {
+
+  _loadDetail(){
+    const  navigator  = this.props.nav;
+    if(navigator){
+        navigator.push({
+            name: 'detail',
+            component: Detail,
+            params:{
+                id:this.props.id
+            }
+         })
+    }
+  }
+
+  render(){
+    let item = this.props.item;
     return (
-      <TouchableOpacity onPress={this._loadDetail} key={i}>
+      <TouchableOpacity onPress={this._loadDetail.bind(this)} >
         <View style={styles.item}>
             <View style={{flex:1,marginRight:10}}>
-              <Image source={{uri:element.imageUrl}} style={styles.img}/>
+              <Image source={{uri:item.imageUrl}} style={styles.img}/>
             </View>
             <View style={{flexDirection:'column',flex:4}}>
               <View>
-                <Text numberOfLines={5} style={styles.title}>{element.title}</Text>
+                <Text numberOfLines={5} style={styles.title}>{item.title}</Text>
               </View>
               <View style={{flexDirection:'row',marginTop:10}}>
                   <Text style={styles.newsLabel}>
-                      {element.createTime}
+                      {item.comeFrom}
                   </Text>
                   <Text style={styles.newsLabel}>
-                      {element.comeFrom}
+                      {item.createTime}
                   </Text>
               </View>
             </View>
@@ -71,16 +90,6 @@ class NewLists extends Component {
       </TouchableOpacity>
     )
   }
-  render() {
-    return (
-      <View>
-        <ScrollView style={{height:Util.size.height}}>
-          {this.state.news.map(this.createItem)}
-        </ScrollView>
-      </View>
-    )
-  }
-
 }
 
 

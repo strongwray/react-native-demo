@@ -5,29 +5,30 @@ import {
   Text,
   View,
   StyleSheet,
+  Navigator,
+  TouchableHighlight
 } from 'react-native';
 
 class Home extends Component {
+
+
   render() {
     return (
-      <View style={styles.cover}>
-          <NewLists/>
-      </View>
+        <Navigator
+            initialRoute= {{
+              component: NewLists,
+              name:'新闻列表'
+            }}
+            configureScene={() => {
+                return Navigator.SceneConfigs.HorizontalSwipeJump;
+            }}
+            renderScene={(route, navigator) => {
+              let Component = route.component;
+                return <Component {...route.params} navigator={navigator} />
+            }} />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  cover:{
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:'#fff',
-  },
-  homeTitle:{
-    fontSize:20,
-    color:'#555'
-  }
-})
 
 
 module.exports = Home
