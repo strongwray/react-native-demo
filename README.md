@@ -5,13 +5,10 @@
 react-native的第一个项目做nba新闻的app，这里的新闻数据都是通过nodejs服务器从虎扑上面抓取下来。(暂时只有ios版本，Android会在以后更新)
 
   1.这是新闻首页
-
-![intro1](https://github.com/strongwray/react-native-demo/blob/master/introImg/intro1.jpg)
+<img src="https://github.com/strongwray/react-native-demo/blob/master/introImg/intro1.jpg" width="300" />
 
 2.这是新闻详情页
-
-![intro1](https://github.com/strongwray/react-native-demo/blob/master/introImg/intro2.jpg)
-
+<img src="https://github.com/strongwray/react-native-demo/blob/master/introImg/intro2.jpg" width="300" />
 一.启动项目的方式
 
 1.首先启动后台 切换到 server文件夹下面，安装node_module
