@@ -34,7 +34,7 @@ class About extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.pic} source={{uri: 'https://avatars1.githubusercontent.com/u/11511939?v=3&s=460'}}/>
+        <Image style={styles.pic} source={require('../img/my_head.png')}/>
         <Text style={styles.teamName}>wray v1.0.0</Text>
         <Text style={styles.instructions}>用实力让情怀落地</Text>
         <TouchableOpacity onPress={this._openWebView.bind(this,'https://github.com/strongwray')}>

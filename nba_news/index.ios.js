@@ -6,6 +6,7 @@
 import NewLists from './views/home/newlists';
 import Teams from './views/teams';
 import About from './views/about';
+import Login from './views/user/login';
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -17,10 +18,11 @@ import {
   Image,
 } from 'react-native';
 
+
 class nba_news extends Component {
 
   state = {
-    selectedTab:'home',
+    selectedTab:'login',
   }
 
   _selectTab(tabName){
@@ -34,9 +36,9 @@ class nba_news extends Component {
     var data = null;
     return <NavigatorIOS
       style={{flex:1}}
-      barTintColor='#eee'
-      titleTextColor="#555"
-      tintColor="#555"
+      barTintColor='#8e0d12'
+      titleTextColor="#fff"
+      tintColor="#fff"
       translucent={true}
       initialRoute={{
           component: component,
@@ -72,9 +74,9 @@ class nba_news extends Component {
           icon={require('./img/about.png')}
           selectedIcon={require('./img/about_select.png')}
           renderAsOriginal
-          selected={this.state.selectedTab === 'about'}
-          onPress={ this._selectTab.bind(this, 'about')}>
-          {this._addIosNavigator(About, '关于')}
+          selected={this.state.selectedTab === 'login'}
+          onPress={ this._selectTab.bind(this, 'login')}>
+          {this._addIosNavigator(Login, '登录')}
         </TabBarIOS.Item>
       </TabBarIOS>
     );
