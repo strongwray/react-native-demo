@@ -7,7 +7,6 @@ import {
   AlertIOS,
   ScrollView,
   TouchableOpacity,
-  Navigator,
   Text,
   View,
   StyleSheet,
@@ -58,7 +57,7 @@ class NewItem extends Component {
         navigator.push({
             name: 'detail',
             component: Detail,
-            params:{
+            passProps:{
                 id:this.props.id
             }
          })

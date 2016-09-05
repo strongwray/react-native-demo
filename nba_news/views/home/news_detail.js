@@ -3,36 +3,16 @@ import Util from '../../util';
 import Service from '../../config';
 import React, { Component } from 'react';
 import {
+  AlertIOS,
   ScrollView,
   TouchableOpacity,
   TouchableHighlight,
-  Navigator,
   Text,
   View,
   StyleSheet,
   Image
 } from 'react-native';
 
-//返回首页(导航栏)
-class NavigatorBack extends Component {
-  onPress(){
-  const  navigator  = this.props.nav;
-      if(navigator) {
-          navigator.pop();
-      }
-  }
-  render() {
-    return (
-      <View style={styles.backContainer}>
-         <TouchableHighlight
-          underlayColor="#eee"
-          onPress={this.onPress.bind(this)}>
-          <Text style={styles.buttonText}>返回</Text>
-         </TouchableHighlight>
-      </View>
-    )
-  }
-}
 
 //新闻详情
 class Detail extends Component {
@@ -52,9 +32,11 @@ class Detail extends Component {
     let detail = this.state.detail;
     return (
       <ScrollView style={{flexDirection:'column',height:Util.size.height}}>
-          <NavigatorBack nav={this.props.navigator}/>
+
           <Text style={styles.articleTitle}>{detail.title}</Text>
-          <Image source={{uri:detail.articleImg}} style={styles.img}/>
+          <View style={{padding:10}}>
+            <Image source={{uri:detail.articleImg}} style={styles.img}/>
+          </View>
           <View style={{flexDirection:'row'}}>
             <Text style={styles.detailLabel}>{detail.media}</Text>
             <Text style={styles.detailLabel}>{detail.times}</Text>
@@ -85,7 +67,7 @@ const styles = StyleSheet.create({
     paddingLeft:15,
   },
   img:{
-    width:Util.size.width,
+    width:Util.size.width - 20,
     height:200,
   },
   detailLabel:{

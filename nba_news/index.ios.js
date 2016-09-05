@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-import Home from './views/home';
+import NewLists from './views/home/newlists';
 import Teams from './views/teams';
 import About from './views/about';
 import React, { Component } from 'react';
@@ -17,11 +17,10 @@ import {
   Image,
 } from 'react-native';
 
-
 class nba_news extends Component {
 
   state = {
-    selectedTab:'team',
+    selectedTab:'home',
   }
 
   _selectTab(tabName){
@@ -38,7 +37,7 @@ class nba_news extends Component {
       barTintColor='#eee'
       titleTextColor="#555"
       tintColor="#555"
-      translucent={false}
+      translucent={true}
       initialRoute={{
           component: component,
           title: title,
@@ -61,7 +60,7 @@ class nba_news extends Component {
           selectedIcon={require('./img/news_select.png')}
           selected={this.state.selectedTab === 'home'}
           onPress={this._selectTab.bind(this, 'home')}>
-          <Home/>
+          {this._addIosNavigator(NewLists, '新闻')}
         </TabBarIOS.Item>
         <TabBarIOS.Item
           icon={require('./img/basketball.png')}
