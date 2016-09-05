@@ -21,7 +21,7 @@ import {
 class nba_news extends Component {
 
   state = {
-    selectedTab:'home',
+    selectedTab:'team',
   }
 
   _selectTab(tabName){
@@ -37,7 +37,7 @@ class nba_news extends Component {
       style={{flex:1}}
       barTintColor='#eee'
       titleTextColor="#555"
-      tintColor="#fff"
+      tintColor="#555"
       translucent={false}
       initialRoute={{
           component: component,
@@ -75,7 +75,7 @@ class nba_news extends Component {
           renderAsOriginal
           selected={this.state.selectedTab === 'about'}
           onPress={ this._selectTab.bind(this, 'about')}>
-          {this._addIosNavigator(About, '关于我们')}
+          {this._addIosNavigator(About, '关于')}
         </TabBarIOS.Item>
       </TabBarIOS>
     );

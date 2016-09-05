@@ -11,7 +11,23 @@ import {
   Image
 } from 'react-native';
 
-//新闻模块
+
+//单只球队(图标内容)
+class Team extends Component {
+  render(){
+    let item = this.props.item;
+    return (
+      <View style={styles.teamItem}>
+        <Image source={{uri:item.teamIcon}} style={styles.teamIcon}/>
+        <Text>{item.teamName}</Text>
+        <Text>{item.teamRecord}</Text>
+      </View>
+    )
+  }
+}
+
+
+//球队模块
 class Teams extends Component {
 
   state = { teams:[] };
@@ -28,20 +44,17 @@ class Teams extends Component {
     })
   }
 
-  createItems(item,i){
-    return (
-      <View key={i} style={styles.teamItem}>
-        <Image source={{uri:item.teamIcon}} style={styles.teamIcon}/>
-        <Text>{item.teamName}</Text>
-        <Text>{item.teamRecord}</Text>
-      </View>
-    )
-  }
 
   render(){
+    var renderItems = [],teams = this.state.teams;
+    for(let i=0;i<teams.length;i++){
+      renderItems.push(
+        <Team key={i} item={teams[i]}/>
+      )
+    }
     return (
-      <ScrollView style={{width:Util.size.height,flexDirection:'column'}}>
-        {this.state.teams.map(this.createItems)}
+      <ScrollView style={styles.scrollContainer}>
+           {renderItems}
       </ScrollView>
     )
   }
@@ -49,7 +62,12 @@ class Teams extends Component {
 }
 
 const styles = StyleSheet.create({
+  scrollContainer:{
+    flexDirection:'column',
+    height:Util.size.height,
+  },
   teamItem:{
+    flex:3,
   },
   teamIcon:{
     width:70,
