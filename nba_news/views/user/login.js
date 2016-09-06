@@ -1,5 +1,6 @@
 //登录界面
 import Util from '../../util';
+import Register from './register';
 import React, { Component } from 'react';
 import {
   Text,
@@ -7,13 +8,20 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
+  TextInput
 } from 'react-native';
 
 class Login extends Component {
 
   _login(){
 
+  }
+
+  _routerRegister(navigator){
+    navigator.push({
+      title:'注册',
+      component: Register
+    })
   }
 
   render(){
@@ -24,20 +32,24 @@ class Login extends Component {
         </View>
 
         <View style={styles.inputRow}>
-          <Text>用户名</Text><TextInput style={styles.input} placeholder="请输入邮箱"/>
+          <Text style={styles.labelText}>用户名</Text><TextInput style={styles.input} placeholder="请输入用户名"/>
         </View>
         <View style={styles.inputRow}>
-          <Text>密码</Text><TextInput style={styles.input} placeholder="请输入密码" password={true}/>
+          <Text style={styles.labelText}>密码</Text><TextInput style={styles.input} placeholder="请输入密码" password={true}/>
         </View>
-        <View>
+        <View style={{flexDirection:'row'}}>
           <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._login}>
-            <Text style={{fontSize:16,color:'#fff'}}>登录</Text>
+            <Text style={styles.btnText}>登录</Text>
+          </TouchableOpacity>
+          <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._routerRegister.bind(this,this.props.navigator)}>
+            <Text style={styles.btnText}>注册</Text>
           </TouchableOpacity>
         </View>
       </View>
     )
   }
 }
+
 
 var styles = StyleSheet.create({
   container:{
@@ -51,10 +63,17 @@ var styles = StyleSheet.create({
     marginBottom:20
   },
   inputRow:{
+    width:Util.size.width,
+    borderBottomWidth:1,
+    borderBottomColor:'#eee',
     flexDirection:'row',
     alignItems:'center',
     justifyContent: 'center',
     marginBottom:10,
+  },
+  labelText:{
+    fontSize:18,
+    color:'#555'
   },
   input:{
     marginLeft:10,
@@ -73,6 +92,11 @@ var styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     borderRadius: 4,
+    marginRight:10
+  },
+  btnText:{
+    fontSize:16,
+    color:'#fff'
   }
 });
 
