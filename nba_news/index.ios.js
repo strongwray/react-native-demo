@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-import NewLists from './views/home/newlists';
+import NewLists from './views/home/new_lists';
 import Teams from './views/teams';
 import About from './views/about';
 import Login from './views/user/login';

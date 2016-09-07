@@ -27,6 +27,7 @@ class Register extends Component {
     } else if(data.password!=data.confirmPass){
       AlertIOS.alert('','两次输入的密码不相同');
     } else {
+      delete data.confirmPass;
       callback()
     }
   }

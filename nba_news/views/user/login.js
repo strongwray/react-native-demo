@@ -1,5 +1,6 @@
 //登录界面
 import Util from '../../util';
+import Service from '../../config';
 import Register from './register';
 import React, { Component } from 'react';
 import {
@@ -8,13 +9,15 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  AlertIOS
 } from 'react-native';
 
 class Login extends Component {
 
-  _login(){
-
+  state = {
+    name:'',
+    password:''
   }
 
   _routerRegister(navigator){
@@ -22,6 +25,31 @@ class Login extends Component {
       title:'注册',
       component: Register
     })
+  }
+
+  _getName(val){
+    this.setState({
+      name: val
+    });
+  }
+
+  _getPassword(val){
+    this.setState({
+      password: val
+    });
+  }
+
+  _login(){
+    let postData = {},path = Service.host + Service.login; //登录
+        postData.name = this.state.name;
+        postData.password = this.state.password;
+        Util.post(path,postData,function(data){
+          if(data.success){
+            AlertIOS.alert('登录','登录成功');
+          } else {
+            AlertIOS.alert('登录失败',data.errMsg);
+          }
+        })
   }
 
   render(){
@@ -32,13 +60,13 @@ class Login extends Component {
         </View>
 
         <View style={styles.inputRow}>
-          <Text style={styles.labelText}>用户名</Text><TextInput style={styles.input} placeholder="请输入用户名"/>
+          <Text style={styles.labelText}>用户名</Text><TextInput style={styles.input} onChangeText={this._getName.bind(this)} placeholder="请输入用户名"/>
         </View>
         <View style={styles.inputRow}>
-          <Text style={styles.labelText}>密码</Text><TextInput style={styles.input} placeholder="请输入密码" password={true}/>
+          <Text style={styles.labelText}>密码</Text><TextInput style={styles.input} onChangeText={this._getPassword.bind(this)} placeholder="请输入密码" password={true}/>
         </View>
         <View style={{flexDirection:'row'}}>
-          <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._login}>
+          <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._login.bind(this)}>
             <Text style={styles.btnText}>登录</Text>
           </TouchableOpacity>
           <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._routerRegister.bind(this,this.props.navigator)}>
