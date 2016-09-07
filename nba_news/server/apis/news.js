@@ -13,7 +13,7 @@ exports.api = function(app){
               let news = {},reg = /\d+/;
               news.id = Number(reg.exec($(element).find('.news-link').attr('href')));
               news.title = $(element).find('.news-wrap .news-txt h3').text().trim(); //标题(trim去除字符串中的空格)
-              // news.imageUrl = $(element).find('.news-wrap >.img-wrap').css();//获取当前的imageUrl
+              // news.imageUrl = $(element).find('.img-wrap').css()[background-image];//获取当前的imageUrl
               // news.imageUrl = news.imageUrl.slice(4,news.imageUrl.length -1); //切割字符串
               news.createTime = $(element).find('.news-txt .news-status-bar .news-info > .news-time').text(); //创建时间
               news.comeFrom = $(element).find('.news-txt .news-status-bar .news-info > .news-source').text(); //消息来源

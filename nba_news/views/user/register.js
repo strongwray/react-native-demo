@@ -9,29 +9,80 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  AlertIOS
 } from 'react-native';
 
 
 class Register extends Component {
-
-  _register(){
-
+  state = {
+    name:'',
+    team:'',
+    password:'',
+    confirmPass:''
+  }
+//注册校验
+  _registerValidate(data,callback){
+    if(data.name==''||data.team==''||data.password==''||data.confirmPass==''){
+      AlertIOS.alert('','请填写用户信息');
+    } else if(data.password!=data.confirmPass){
+      AlertIOS.alert('','两次输入的密码不相同');
+    } else {
+      callback()
+    }
   }
 
+  _register(){
+    let postData = {},path = Service.host + Service.register,self = this; //注册
+    postData.name = this.state.name;
+    postData.team = this.state.team;
+    postData.password = this.state.password;
+    postData.confirmPass = this.state.confirmPass;
+    self._registerValidate(postData,function(){
+        Util.post(path,postData,function(data){
+          if(data.success){
+            self.props.navigator.pop()
+          } else {
+            AlertIOS.alert('注册失败','请重新填写用户信息');
+          }
+        })
+    })
+  }
+
+  _getName(val){
+    this.setState({
+      name: val
+    });
+  }
+
+  _getTeam(val){
+    this.setState({
+      team: val
+    });
+  }
+  _getPassword(val){
+    this.setState({
+      password: val
+    });
+  }
+  _getConfirmPass(val){
+    this.setState({
+      confirmPass: val
+    });
+  }
   render(){
     return (
       <View style={styles.container}>
           <View style={styles.inputRow}>
-            <Text style={styles.labelText}>用户名</Text><TextInput style={styles.input} placeholder="请输入用户名"/>
+            <Text style={styles.labelText}>用户名</Text><TextInput style={styles.input} onChangeText={this._getName.bind(this)} placeholder="请输入用户名"/>
           </View>
           <View style={styles.inputRow}>
-            <Text style={styles.labelText}>支持球队</Text><TextInput style={styles.input}  placeholder="请输入你喜欢的球队"/>
+            <Text style={styles.labelText}>支持球队</Text><TextInput style={styles.input} onChangeText={this._getTeam.bind(this)} placeholder="请输入你喜欢的球队"/>
           </View>
           <View style={styles.inputRow}>
-            <Text style={styles.labelText}>密码</Text><TextInput style={styles.input} placeholder="请输入密码" password={true}/>
+            <Text style={styles.labelText}>密码</Text><TextInput style={styles.input} onChangeText={this._getPassword.bind(this)} placeholder="请输入密码" password={true}/>
           </View>
           <View style={styles.inputRow}>
-            <Text style={styles.labelText}>确认密码</Text><TextInput style={styles.input} placeholder="请再次输入密码" password={true}/>
+            <Text style={styles.labelText}>确认密码</Text><TextInput style={styles.input} onChangeText={this._getConfirmPass.bind(this)} placeholder="请再次输入密码" password={true}/>
           </View>
           <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._register.bind(this)}>
             <Text style={styles.btnText}>注册</Text>
