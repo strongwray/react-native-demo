@@ -6,13 +6,17 @@ react-native的第一个项目做nba新闻的app，这里的新闻数据都是�
 
 启动项目的方式
 
-1.首先启动后台 切换到 server文件夹下面，安装node_module
+1.在当前目录下安装react-native依赖包
+
+npm install
+
+2.切换到 server文件夹下面，安装node_module
 
 npm install
 
 然后启动 node app.js （如果有nodemon，直接热启动）
 
-2.启动react-native项目， 进入ios目录，通过xcode打开nba_news.xcodeproj。
+3.启动react-native项目， 进入ios目录，通过xcode打开nba_news.xcodeproj。
 
 通过command+ R启动 app项目。
 
