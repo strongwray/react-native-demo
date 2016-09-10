@@ -7,11 +7,14 @@ import NewLists from './views/home/new_lists';
 import Teams from './views/teams';
 import About from './views/about';
 import Login from './views/user/login';
+import UserInfor from './views/user/user_infor';
+import LocalStorage from './util/local_storage';
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   TabBarIOS,
+  Navigator,
   NavigatorIOS,
   Text,
   View,
@@ -21,8 +24,14 @@ import {
 
 class nba_news extends Component {
 
+  constructor(props){
+    super(props)
+    this.localStorage = new LocalStorage();
+  }
+
   state = {
-    selectedTab:'login',
+    selectedTab:'home',
+    isLogin:false
   }
 
   _selectTab(tabName){
@@ -49,6 +58,38 @@ class nba_news extends Component {
         }} />
   }
 
+  _addCommonNavigator(component,name){
+    return (
+        <Navigator
+          initialRoute={{ name: name, component: component }}
+          configureScene={(route) => {
+            return Navigator.SceneConfigs.VerticalDownSwipeJump;
+          }}
+          renderScene={(route, navigator) => {
+            let Component = route.component;
+            return <Component {...route.params} navigator={navigator} />
+          }} />
+    );
+  }
+
+  isLogin(state){
+    if(state){
+      return  this._addCommonNavigator(UserInfor,'userInfor')
+    } else {
+      return  this._addCommonNavigator(Login,'login')
+    }
+  }
+
+  componentDidMount(){
+    let self = this;
+    this.localStorage.getLocalData('user',function(data){
+      if(data) {
+        self.setState({isLogin:true})
+      } else {
+        self.setState({isLogin:false})
+      }
+    })
+  }
 
   render() {
     return (
@@ -61,6 +102,7 @@ class nba_news extends Component {
           renderAsOriginal
           selectedIcon={require('./img/news_select.png')}
           selected={this.state.selectedTab === 'home'}
+          renderAsOriginal
           onPress={this._selectTab.bind(this, 'home')}>
           {this._addIosNavigator(NewLists, '新闻')}
         </TabBarIOS.Item>
@@ -73,10 +115,9 @@ class nba_news extends Component {
         <TabBarIOS.Item
           icon={require('./img/about.png')}
           selectedIcon={require('./img/about_select.png')}
-          renderAsOriginal
           selected={this.state.selectedTab === 'login'}
-          onPress={ this._selectTab.bind(this, 'login')}>
-          {this._addIosNavigator(Login, '登录')}
+          onPress={ this._selectTab.bind(this,'login')}>
+          {this.isLogin(this.state.isLogin)}
         </TabBarIOS.Item>
       </TabBarIOS>
     );

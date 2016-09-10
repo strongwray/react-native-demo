@@ -1,5 +1,4 @@
 import Dimensions from 'Dimensions'
-
 let Util = {
   //屏幕尺寸
   size: {
@@ -38,6 +37,8 @@ let Util = {
       callback(JSON.parse(responseText));
     });
   }
+  //本地持久化存储
+
 };
 
 module.exports = Util

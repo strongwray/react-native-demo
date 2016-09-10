@@ -11,21 +11,31 @@ import {
 
 //创建一个WebView
 class AboutWebView extends Component {
+  
   render(){
     return (
-      <View style={{flex:1, marginBottom: 64}}>
-        <WebView source={{uri:this.props.source}} style={{backgroundColor:'#555',height: 200}}/>
+      <View>
+          <View style={styles.container}>
+            <View style={{flex:1, marginBottom: 64}}>
+              <WebView source={{uri:this.props.source}} style={{backgroundColor:'#555',height: 200}}/>
+            </View>
+          </View>
       </View>
     )
   }
 }
 
 class About extends Component {
+
+  _routerUserInfor(navigator){
+      navigator.pop()
+  }
+
   _openWebView(source){
     this.props.navigator.push({
-      title:'我的github项目地址',
+      name:'webview',
       component: AboutWebView,
-      passProps:{
+      params:{
         source: source
       }
     })
@@ -33,20 +43,36 @@ class About extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Image style={styles.pic} source={require('../img/my_head.png')}/>
-        <Text style={styles.teamName}>wray v1.0.0</Text>
-        <Text style={styles.instructions}>用实力让情怀落地</Text>
-        <TouchableOpacity onPress={this._openWebView.bind(this,'https://github.com/strongwray')}>
-              <Image style={styles.img} source={require('../img/github.png')}/>
-        </TouchableOpacity>
+      <View style={styles.aboutContainer}>
+          <TouchableOpacity underlayColor="#fff" onPress={this._routerUserInfor.bind(this,this.props.navigator)}>
+            <Text style={styles.navBackText}>返回</Text>
+          </TouchableOpacity>
+          <View style={styles.container}>
+            <Image style={styles.pic} source={require('../img/my_head.png')}/>
+            <Text style={styles.teamName}>wray v1.0.0</Text>
+            <Text style={styles.instructions}>用实力让情怀落地</Text>
+            <TouchableOpacity onPress={this._openWebView.bind(this,'https://github.com/strongwray')}>
+                  <Image style={styles.img} source={require('../img/github.png')}/>
+            </TouchableOpacity>
+          </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  aboutContainer:{
+    marginTop:50
+  },
+  navBackText:{
+    fontSize:16,
+    marginLeft:20,
+    marginBottom:20,
+    borderBottomColor:'#eee',
+    borderBottomWidth:1,
+  },
   container: {
+    marginTop:150,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

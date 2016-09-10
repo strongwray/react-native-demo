@@ -1,6 +1,8 @@
 //登录界面
 import Util from '../../util';
+import LocalStorage from '../../util/local_storage';
 import Service from '../../config';
+import UserInfor from '../user/user_infor';
 import Register from './register';
 import React, { Component } from 'react';
 import {
@@ -14,6 +16,11 @@ import {
 } from 'react-native';
 
 class Login extends Component {
+
+  constructor(props){
+    super(props)
+    this.localStorage = new LocalStorage();
+  }
 
   state = {
     name:'',
@@ -39,13 +46,17 @@ class Login extends Component {
     });
   }
 
-  _login(){
-    let postData = {},path = Service.host + Service.login; //登录
+  _login(navigator){
+    let self = this,postData = {},path = Service.host + Service.login; //登录
         postData.name = this.state.name;
         postData.password = this.state.password;
         Util.post(path,postData,function(data){
           if(data.success){
-            AlertIOS.alert('登录','登录成功');
+            self.localStorage.addLocalData('user',data.data) //存储返回的数据到本地app
+            navigator.replace({
+                name: 'userInfor',
+                component: UserInfor
+             })
           } else {
             AlertIOS.alert('登录失败',data.errMsg);
           }
@@ -66,7 +77,7 @@ class Login extends Component {
           <Text style={styles.labelText}>密码</Text><TextInput style={styles.input} onChangeText={this._getPassword.bind(this)} placeholder="请输入密码" password={true}/>
         </View>
         <View style={{flexDirection:'row'}}>
-          <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._login.bind(this)}>
+          <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._login.bind(this,this.props.navigator)}>
             <Text style={styles.btnText}>登录</Text>
           </TouchableOpacity>
           <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._routerRegister.bind(this,this.props.navigator)}>

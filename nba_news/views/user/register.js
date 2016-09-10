@@ -31,7 +31,9 @@ class Register extends Component {
       callback()
     }
   }
-
+  _routerLogin(navigator){
+    navigator.pop()
+  }
   _register(){
     let postData = {},path = Service.host + Service.register,self = this; //注册
     postData.name = this.state.name;
@@ -73,6 +75,9 @@ class Register extends Component {
   render(){
     return (
       <View style={styles.container}>
+        <TouchableOpacity underlayColor="#fff" onPress={this._routerLogin.bind(this,this.props.navigator)}>
+          <Text style={styles.navBackText}>返回</Text>
+        </TouchableOpacity>
           <View style={styles.inputRow}>
             <Text style={styles.labelText}>用户名</Text><TextInput style={styles.input} onChangeText={this._getName.bind(this)} placeholder="请输入用户名"/>
           </View>
@@ -85,9 +90,11 @@ class Register extends Component {
           <View style={styles.inputRow}>
             <Text style={styles.labelText}>确认密码</Text><TextInput style={styles.input} onChangeText={this._getConfirmPass.bind(this)} placeholder="请再次输入密码" password={true}/>
           </View>
+          <View style={{alignItems:'center'}}>
           <TouchableOpacity underlayColor="#fff" style={styles.btn} onPress={this._register.bind(this)}>
             <Text style={styles.btnText}>注册</Text>
           </TouchableOpacity>
+          </View>
       </View>
     )
   }
@@ -95,9 +102,15 @@ class Register extends Component {
 
 
 var styles = StyleSheet.create({
+  navBackText:{
+    fontSize:16,
+    marginLeft:20,
+    marginBottom:20,
+    borderBottomColor:'#eee',
+    borderBottomWidth:1,
+  },
   container:{
-    marginTop:100,
-    alignItems:'center',
+    marginTop:50,
   },
   inputRow:{
     width:Util.size.width,
