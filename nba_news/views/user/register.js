@@ -75,7 +75,7 @@ class Register extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <TouchableOpacity underlayColor="#fff" onPress={this._routerLogin.bind(this,this.props.navigator)}>
+        <TouchableOpacity underlayColor="#fff" onPress={() => this.props.navigator.pop()}>
           <Text style={styles.navBackText}>返回</Text>
         </TouchableOpacity>
           <View style={styles.inputRow}>

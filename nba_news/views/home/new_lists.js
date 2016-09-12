@@ -40,9 +40,14 @@ class NewLists extends Component {
       )
     }
     return (
+      <View>
+        <View style={styles.navTitle}>
+          <Text style={styles.navTitleText}>新闻</Text>
+        </View>
         <ScrollView style={{height:Util.size.height}}>
           {renderItems}
         </ScrollView>
+      </View>
      )
   }
 
@@ -54,13 +59,12 @@ class NewItem extends Component {
   _loadDetail(){
     const  navigator  = this.props.nav;
     if(navigator){
-        navigator.push({
-            name: 'detail',
-            component: Detail,
-            passProps:{
-                id:this.props.id
-            }
-         })
+      navigator.push({
+        id: 'detail',
+        params:{
+          newsId:this.props.id
+        }
+      })
     }
   }
 
@@ -93,6 +97,17 @@ class NewItem extends Component {
 
 
 const styles = StyleSheet.create({
+  navTitle:{
+    width:Util.size.width,
+    height:70,
+    backgroundColor:'#8e0d12',
+    alignItems:'center',
+  },
+  navTitleText:{
+    fontSize:18,
+    color:'#fff',
+    marginTop:40
+  },
   item:{
     flexDirection:'row',
     width:Util.size.width,

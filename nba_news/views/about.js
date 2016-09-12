@@ -11,7 +11,7 @@ import {
 
 //创建一个WebView
 class AboutWebView extends Component {
-  
+
   render(){
     return (
       <View>
@@ -27,10 +27,6 @@ class AboutWebView extends Component {
 
 class About extends Component {
 
-  _routerUserInfor(navigator){
-      navigator.pop()
-  }
-
   _openWebView(source){
     this.props.navigator.push({
       name:'webview',
@@ -44,7 +40,7 @@ class About extends Component {
   render() {
     return (
       <View style={styles.aboutContainer}>
-          <TouchableOpacity underlayColor="#fff" onPress={this._routerUserInfor.bind(this,this.props.navigator)}>
+          <TouchableOpacity underlayColor="#fff" onPress={() => this.props.navigator.pop()}>
             <Text style={styles.navBackText}>返回</Text>
           </TouchableOpacity>
           <View style={styles.container}>

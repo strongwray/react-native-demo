@@ -4,7 +4,7 @@
  * @flow
  */
 import NewLists from './views/home/new_lists';
-import Teams from './views/teams';
+import NewDetail from './views/home/news_detail';
 import About from './views/about';
 import Login from './views/user/login';
 import UserInfor from './views/user/user_infor';
@@ -15,15 +15,13 @@ import {
   StyleSheet,
   TabBarIOS,
   Navigator,
-  NavigatorIOS,
   Text,
   View,
   Image,
 } from 'react-native';
 
-
-class nba_news extends Component {
-
+//tabbar
+class MainTabBar extends Component {
   constructor(props){
     super(props)
     this.localStorage = new LocalStorage();
@@ -38,24 +36,6 @@ class nba_news extends Component {
     this.setState({
       selectedTab: tabName
     })
-  }
-
-
-  _addIosNavigator(component,title){
-    var data = null;
-    return <NavigatorIOS
-      style={{flex:1}}
-      barTintColor='#8e0d12'
-      titleTextColor="#fff"
-      tintColor="#fff"
-      translucent={true}
-      initialRoute={{
-          component: component,
-          title: title,
-          passProps:{
-            data: data
-          }
-        }} />
   }
 
   _addCommonNavigator(component,name){
@@ -104,13 +84,7 @@ class nba_news extends Component {
           selected={this.state.selectedTab === 'home'}
           renderAsOriginal
           onPress={this._selectTab.bind(this, 'home')}>
-          {this._addIosNavigator(NewLists, '新闻')}
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
-          icon={require('./img/basketball.png')}
-          selected={this.state.selectedTab === 'team'}
-          onPress={this._selectTab.bind(this, 'team')}>
-          {this._addIosNavigator(Teams, '球队')}
+          <NewLists navigator={this.props.navigator}/>
         </TabBarIOS.Item>
         <TabBarIOS.Item
           icon={require('./img/about.png')}
@@ -121,6 +95,31 @@ class nba_news extends Component {
         </TabBarIOS.Item>
       </TabBarIOS>
     );
+  }
+}
+
+
+class nba_news extends Component {
+  renderScene(route, navigator) {
+    switch (route.id) {
+      case 'tabar':
+        return <MainTabBar {...route.params} navigator={navigator} />;
+        break;
+      case 'detail': //新闻详情页
+        return <NewDetail {...route.params} navigator={navigator}/>;
+    }
+  }
+  render() {
+    return (
+      <Navigator
+        ref="navigator"
+    		initialRoute={{id:'tabar'}}
+				configureScene={(route) => {
+      		return Navigator.SceneConfigs.PushFromRight
+        }}
+        renderScene={this.renderScene}
+			/>
+    )
   }
 }
 

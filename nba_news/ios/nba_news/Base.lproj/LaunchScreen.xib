@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="85A13CE8-E7EC-4BD5-B1AB-34FA3FFCDD53" translatesAutoresizingMaskIntoConstraints="NO" id="dnb-Rw-P8h">
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="D86C9787-10B5-4C28-BF63-A543FF6E56FA" translatesAutoresizingMaskIntoConstraints="NO" id="dnb-Rw-P8h">
                     <rect key="frame" x="97" y="216" width="221" height="319"/>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MY NBA" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="RNR-ep-dXk">
@@ -34,7 +34,7 @@
         </view>
     </objects>
     <resources>
-        <image name="85A13CE8-E7EC-4BD5-B1AB-34FA3FFCDD53" width="162" height="162">
+        <image name="D86C9787-10B5-4C28-BF63-A543FF6E56FA" width="162" height="162">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
