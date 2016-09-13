@@ -2,6 +2,7 @@
 import Util from '../../util';
 import Service from '../../config';
 import Detail from './news_detail';
+import WLoading from '../components/w_loading';
 import React, { Component } from 'react';
 import {
   AlertIOS,
@@ -17,7 +18,7 @@ import {
 //多条新闻
 class NewLists extends Component {
 
-  state = { news:[] };
+  state = { news:null };
 
   componentDidMount(){
     var  path = Service.host + Service.getNews, //获取新闻列表
@@ -34,6 +35,11 @@ class NewLists extends Component {
 //创建单条新闻
   render() {
     var renderItems = [],news = this.state.news;
+    if(news==null){
+      return (
+        <WLoading text={"新闻加载中..."}/>
+      )
+    }
     for(let i=0;i<news.length;i++){
       renderItems.push(
         <NewItem key={i} item={news[i]} id={news[i].id} nav={this.props.navigator}/>
@@ -50,7 +56,6 @@ class NewLists extends Component {
       </View>
      )
   }
-
 }
 
 //单条新闻

@@ -1,6 +1,7 @@
 //新闻详情
 import Util from '../../util';
 import Service from '../../config';
+import WLoading from '../components/w_loading';
 import React, { Component } from 'react';
 import {
   AlertIOS,
@@ -12,13 +13,15 @@ import {
   Image
 } from 'react-native';
 
-
+console.log(WLoading)
 //新闻详情
 class Detail extends Component {
-  state = { detail:{} };
+  state = { detail:null }
+
   componentDidMount(){
     var  path = Service.host + Service.getNewsDetail, //获取新闻列表
          self = this;
+
     Util.post(path,{newsId:this.props.newsId},function(data){
       if(data.success){
         self.setState({detail:data.datas})
@@ -29,26 +32,31 @@ class Detail extends Component {
   }
   render(){
     let detail = this.state.detail;
-    return (
-      <View>
-        <View style={styles.navTitle}>
-          <TouchableOpacity underlayColor="#fff" onPress={() => this.props.navigator.pop()}>
-            <Text style={styles.navBackText}>返回</Text>
-          </TouchableOpacity>
+    if(detail==null){
+      return (
+        <WLoading text={"加载中..."}/>
+      )
+    }
+      return (
+        <View>
+          <View style={styles.navTitle}>
+            <TouchableOpacity underlayColor="#fff" onPress={() => this.props.navigator.pop()}>
+              <Text style={styles.navBackText}>返回</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView style={{flexDirection:'column',height:Util.size.height}}>
+              <Text style={styles.articleTitle}>{detail.title}</Text>
+              <View style={{padding:10}}>
+                <Image source={{uri:detail.articleImg}} style={styles.img}/>
+              </View>
+              <View style={{flexDirection:'row'}}>
+                <Text style={styles.detailLabel}>{detail.media}</Text>
+                <Text style={styles.detailLabel}>{detail.times}</Text>
+              </View>
+              <Text style={styles.contents}>{detail.content}</Text>
+          </ScrollView>
         </View>
-        <ScrollView style={{flexDirection:'column',height:Util.size.height}}>
-            <Text style={styles.articleTitle}>{detail.title}</Text>
-            <View style={{padding:10}}>
-              <Image source={{uri:detail.articleImg}} style={styles.img}/>
-            </View>
-            <View style={{flexDirection:'row'}}>
-              <Text style={styles.detailLabel}>{detail.media}</Text>
-              <Text style={styles.detailLabel}>{detail.times}</Text>
-            </View>
-            <Text style={styles.contents}>{detail.content}</Text>
-        </ScrollView>
-      </View>
-    )
+      )
   }
 }
 

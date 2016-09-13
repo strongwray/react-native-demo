@@ -1,8 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+//ios main
 import NewLists from './views/home/new_lists';
 import NewDetail from './views/home/news_detail';
 import About from './views/about';
