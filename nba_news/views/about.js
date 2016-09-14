@@ -11,16 +11,9 @@ import {
 
 //创建一个WebView
 class AboutWebView extends Component {
-
   render(){
     return (
-      <View>
-          <View style={styles.container}>
-            <View style={{flex:1, marginBottom: 64}}>
-              <WebView source={{uri:this.props.source}} style={{backgroundColor:'#555',height: 200}}/>
-            </View>
-          </View>
-      </View>
+      <WebView source={{uri:this.props.source}}/>
     )
   }
 }
