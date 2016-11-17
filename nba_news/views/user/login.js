@@ -29,7 +29,7 @@ class Login extends Component {
 
   _routerRegister(navigator){
     navigator.push({
-      title:'注册',
+      id:'register',
       component: Register
     })
   }
@@ -54,7 +54,7 @@ class Login extends Component {
           if(data.success){
             self.localStorage.addLocalData('user',data.data) //存储返回的数据到本地app
             navigator.replace({
-                name: 'userInfor',
+                id:'userInfor',
                 component: UserInfor
              })
           } else {

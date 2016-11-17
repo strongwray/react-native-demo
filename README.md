@@ -33,3 +33,6 @@ npm install
 <img src="https://github.com/strongwray/react-native-demo/blob/master/introImg/intro2.jpg" width="300" />
 
 
+###新版本更新
+    重新调整对mysql的操作接口，然后在构建nodejs服务器的时候能够可以分离数据源。利用仓库
+  mysql-crud的方法来分层。

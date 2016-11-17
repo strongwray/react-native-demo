@@ -31,9 +31,7 @@ class Register extends Component {
       callback()
     }
   }
-  _routerLogin(navigator){
-    navigator.pop()
-  }
+
   _register(){
     let postData = {},path = Service.host + Service.register,self = this; //注册
     postData.name = this.state.name;

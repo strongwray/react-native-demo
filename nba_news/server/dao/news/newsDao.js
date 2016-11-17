@@ -1,9 +1,10 @@
 'use strict'
 const request = require('request'),
       cheerio = require('cheerio');
-exports.api = function(app){
-  //获取虎扑新闻列表
-  app.get('/api/news',function(req,res){
+
+module.exports = {
+  //获取新闻列表
+  getNews:function(req, res, next){
     let basicUrl = 'https://m.hupu.com/nba/news/',//虎扑新闻页面(现在从手机版获取)
         resData = {success:true,datas:[]};
       request(basicUrl,function (error, response, body){
@@ -25,29 +26,28 @@ exports.api = function(app){
           res.send(resData)
         }
       })
-  })
+  },
   //获取新闻详情页
-  app.post('/api/news/detail',function(req,res){
-      let newsId = req.body.newsId,
-          basicUrl = 'https://m.hupu.com/nba/news/'+newsId+'.html',//虎扑新闻页面详情
-          resData = {success:true,datas:{}};
-      request(basicUrl,function (error, response, body){
-          if (!error && response.statusCode == 200) {
-              let $ = cheerio.load(body),newsDetail = {},article = '';
-              resData.datas.title = $('.detail-content').find('.artical-title h1').text();
-              resData.datas.media = $('.detail-content').find('.artical-title .artical-info').children('.author-name').children('.media').text();
-              resData.datas.times = $('.detail-content').find('.artical-title .artical-info').children('.times').text();
-              resData.datas.articleImg = $('.article-content img').attr('src');
-              $('.article-content').find('p').each(function(index,element){ //获取当前文章内容
-                  article += $(element).text();
-              })
-              resData.datas.content = article;
-            res.send(resData)
-          } else { //请求失败
-            resData.success = false;
-            res.send(resData)
-          }
-      })
-  })
-
+  getNewsDetail:function(req, res, next){
+    let newsId = req.body.newsId,
+        basicUrl = 'https://m.hupu.com/nba/news/'+newsId+'.html',//虎扑新闻页面详情
+        resData = {success:true,datas:{}};
+    request(basicUrl,function (error, response, body){
+        if (!error && response.statusCode == 200) {
+            let $ = cheerio.load(body),newsDetail = {},article = '';
+            resData.datas.title = $('.detail-content').find('.artical-title h1').text();
+            resData.datas.media = $('.detail-content').find('.artical-title .artical-info').children('.author-name').children('.media').text();
+            resData.datas.times = $('.detail-content').find('.artical-title .artical-info').children('.times').text();
+            resData.datas.articleImg = $('.article-content img').attr('src');
+            $('.article-content').find('p').each(function(index,element){ //获取当前文章内容
+                article += $(element).text();
+            })
+            resData.datas.content = article;
+          res.send(resData)
+        } else { //请求失败
+          resData.success = false;
+          res.send(resData)
+        }
+    })
+  }
 }

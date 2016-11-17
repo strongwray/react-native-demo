@@ -1,4 +1,5 @@
 //关于我们的页面
+import Util from '../util';
 import React, { Component } from 'react';
 import {
   Text,
@@ -22,7 +23,7 @@ class About extends Component {
 
   _openWebView(source){
     this.props.navigator.push({
-      name:'webview',
+      id:'webview',
       component: AboutWebView,
       params:{
         source: source
@@ -33,9 +34,11 @@ class About extends Component {
   render() {
     return (
       <View style={styles.aboutContainer}>
-          <TouchableOpacity underlayColor="#fff" onPress={() => this.props.navigator.pop()}>
-            <Text style={styles.navBackText}>返回</Text>
-          </TouchableOpacity>
+          <View style={styles.navTitle}>
+            <TouchableOpacity underlayColor="#fff" onPress={() => this.props.navigator.pop()}>
+              <Text style={styles.navBackText}>返回</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.container}>
             <Image style={styles.pic} source={require('../img/my_head.png')}/>
             <Text style={styles.teamName}>wray v1.0.0</Text>
@@ -50,11 +53,15 @@ class About extends Component {
 }
 
 const styles = StyleSheet.create({
-  aboutContainer:{
-    marginTop:50
+  navTitle:{
+    width:Util.size.width,
+    height:70,
+    backgroundColor:'#8e0d12',
   },
   navBackText:{
     fontSize:16,
+    color:'#fff',
+    marginTop:30,
     marginLeft:20,
     marginBottom:20,
     borderBottomColor:'#eee',

@@ -3,6 +3,7 @@ import NewLists from './views/home/new_lists';
 import NewDetail from './views/home/news_detail';
 import About from './views/about';
 import Login from './views/user/login';
+import Reigster from './views/user/register';
 import UserInfor from './views/user/user_infor';
 import LocalStorage from './util/local_storage';
 import React, { Component } from 'react';
@@ -25,7 +26,7 @@ class MainTabBar extends Component {
 
   state = {
     selectedTab:'home',
-    isLogin:false
+    isLogin:''
   }
 
   _selectTab(tabName){
@@ -34,27 +35,20 @@ class MainTabBar extends Component {
     })
   }
 
-  _addCommonNavigator(component,name){
-    return (
-        <Navigator
-          initialRoute={{ name: name, component: component }}
-          configureScene={(route) => {
-            return Navigator.SceneConfigs.VerticalDownSwipeJump;
-          }}
-          renderScene={(route, navigator) => {
-            let Component = route.component;
-            return <Component {...route.params} navigator={navigator} />
-          }} />
-    );
+  _addNavigator(component,name){
+      return (
+          <Navigator
+            initialRoute={{ name: name, component: component }}
+            configureScene={(route) => {
+              return Navigator.SceneConfigs.VerticalDownSwipeJump;
+            }}
+            renderScene={(route, navigator) => {
+              let Component = route.component;
+              return <Component {...route.params} navigator={navigator} />
+            }} />
+      );
   }
 
-  isLogin(state){
-    if(state){
-      return  this._addCommonNavigator(UserInfor,'userInfor')
-    } else {
-      return  this._addCommonNavigator(Login,'login')
-    }
-  }
 
   componentDidMount(){
     let self = this;
@@ -87,24 +81,31 @@ class MainTabBar extends Component {
           selectedIcon={require('./img/about_select.png')}
           selected={this.state.selectedTab === 'login'}
           onPress={ this._selectTab.bind(this,'login')}>
-          {this.isLogin(this.state.isLogin)}
+          {this.state.isLogin ? <UserInfor navigator={this.props.navigator}/>:<Login navigator={this.props.navigator}/>}
         </TabBarIOS.Item>
       </TabBarIOS>
     );
   }
 }
 
-
 class nba_news extends Component {
-  renderScene(route, navigator) {
+  renderScene(route, navigator) { //这个路由配置是为了隐藏tab栏而设计的
+    let Component = route.component;
     switch (route.id) {
       case 'tabar':
         return <MainTabBar {...route.params} navigator={navigator} />;
         break;
       case 'detail': //新闻详情页
         return <NewDetail {...route.params} navigator={navigator}/>;
+      case 'register': //注册
+        return <Reigster {...route.params} navigator={navigator}/>;
+      case 'about': //关于我们
+        return <About {...route.params} navigator={navigator}/>;
+      default:
+        return <Component {...route.params} navigator={navigator}/>;
     }
   }
+
   render() {
     return (
       <Navigator

@@ -78,6 +78,7 @@ class UserInfor extends Component {
         } else {
           source = {uri: response.uri.replace('file://', ''), isStatic: true};
         }
+
         this.setState({
           avatarSource: source
         });
