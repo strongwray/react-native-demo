@@ -11,7 +11,7 @@ router.get('/api/news',function(req, res, next) {
 })
 
 //获取虎扑详情页
-router.post('/api/news',function(req, res, next) {
+router.post('/api/news/detail',function(req, res, next) {
 	newsDao.getNewsDetail(req, res, next);
 })
 

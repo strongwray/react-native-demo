@@ -13,7 +13,7 @@ import {
   Image
 } from 'react-native';
 
-console.log(WLoading)
+
 //新闻详情
 class Detail extends Component {
   state = { detail:null }
@@ -21,7 +21,6 @@ class Detail extends Component {
   componentDidMount(){
     var  path = Service.host + Service.getNewsDetail, //获取新闻列表
          self = this;
-
     Util.post(path,{newsId:this.props.newsId},function(data){
       if(data.success){
         self.setState({detail:data.datas})
